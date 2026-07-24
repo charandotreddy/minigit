@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <sys/stat.h>
+#include <errno.h>
+#include "init.h"
 
 /*#define MINIGIT_DIR ".minigit"*/
-#define PERMISSION 0755
+#define DIR_PERMISSION 0755
 
 const char *dirs[] = {".minigit",".minigit/objects", ".minigit/refs", ".minigit/refs/heads"};
 #define SIZE (sizeof(dirs)/sizeof(dirs[0]))
@@ -12,51 +14,49 @@ const char *dirs[] = {".minigit",".minigit/objects", ".minigit/refs", ".minigit/
 #define SUCCESS 0
 #define FAILURE -1
 
-int create_dir(void);
+int create_directories(void);
 int create_head(const char *file_path);
 int create_config(const char *file_path);
 
 int cmd_init(void)
 {
-    int status;
 
-    status = create_dir();
-    if(status == -1)
+    if(create_directories() == FAILURE)
     {
        return FAILURE;
     }
     
-    status = create_head(HEAD_PATH);
-    if(status != SUCCESS)
+    if(create_head(HEAD_PATH) != SUCCESS)
     {
-        perror("create_head");
         return FAILURE;
     }
 
-    status = create_config(CONFIG_PATH);
-
-    if(status != SUCCESS)
+    if(create_config(CONFIG_PATH) != SUCCESS)
     {
-        perror("create_config");
         return FAILURE;
     }
 
-    printf("Initialized empty mini git repository in .minigit\n");
+    printf("Initialized empty MiniGit repository in .minigit\n");
     
     return SUCCESS;
 }
 
-int create_dir(void)
+int create_directories(void)
 {
-    int i,status;
+    int i;
 
     for(i = 0; i<SIZE; i++)
     {
-        status = mkdir(dirs[i],PERMISSION);
-
-        if(status == FAILURE)
+        if(mkdir(dirs[i],DIR_PERMISSION) == FAILURE)
         {
-            perror("mkdir");
+            if(errno == EEXIST)
+            {
+                fprintf(stderr,"MiniGit repository already exists.\n");
+            }
+            else
+            {
+                perror("mkdir");
+            }
             return FAILURE;
         }
     }
@@ -76,7 +76,7 @@ int create_head(const char *file_path)
     /*writing on disc can also fail*/
     if(fprintf(fp,"%s",HEAD_CONTENT)<0) 
     {
-        perror("fprintf()");
+        perror("fprintf");
         fclose(fp);
         return FAILURE;
     }
@@ -104,7 +104,7 @@ int create_config(const char *file_path)
 
     if(fclose(fp) == EOF)
     {
-        perror("fclose(fp)");
+        perror("fclose");
         return FAILURE;
     }
 
