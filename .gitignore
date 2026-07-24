@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+*.o
+*.out
+a.out
+minigit
+
+# Debug files
+core
+
+# Editor files
+*.swp
+*.swo
+
+# Desktop metadata
+.directory
+
+# Generated MiniGit repository
+.minigit/
