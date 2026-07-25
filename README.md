@@ -22,7 +22,7 @@ The objective of this project is to understand how Git works internally by imple
 ## Features
 
 - [x] Repository initialization (`minigit init`)
-- [ ] Add
+- [x] Add
 - [ ] Commit
 - [ ] Log
 - [ ] Checkout
