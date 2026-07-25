@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "init.h"
+#include "status.h"
 
 void print_usage(void);
 
@@ -25,6 +26,18 @@ int main(int argc, char *argv[])
 
         return cmd_init();
     }
+    else if(strcmp(argv[1],"status") == 0)
+    {
+        if(argc != 2)
+        {
+            fprintf(stderr,
+                    "Usage: minigit status\n\n");
+            print_usage();
+            return EXIT_FAILURE;
+        }
+        return cmd_status();
+    }
+
     fprintf(stderr,
             "Unknown command: %s\n\n",
             argv[1]);
@@ -39,5 +52,6 @@ void print_usage(void)
                 "Usage:\n"
                 "\tminigit <command>\n\n"
                 "Commands:\n"
-                "\tinit\n");
+                "\tinit\n"
+                "\tstatus\n");
 }
