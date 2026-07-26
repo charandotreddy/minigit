@@ -2,6 +2,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include "init.h"
+#include "common.h"
 
 /*#define MINIGIT_DIR ".minigit"*/
 #define DIR_PERMISSION 0755
@@ -11,8 +12,6 @@ const char *dirs[] = {".minigit",".minigit/objects", ".minigit/refs", ".minigit/
 #define HEAD_PATH ".minigit/HEAD"
 #define CONFIG_PATH ".minigit/config"
 #define HEAD_CONTENT "ref: refs/heads/main\n"
-#define SUCCESS 0
-#define FAILURE -1
 
 int create_directories(void);
 int create_head(const char *file_path);

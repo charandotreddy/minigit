@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "init.h"
 #include "status.h"
+#include "common.h"
 
 void print_usage(void);
 

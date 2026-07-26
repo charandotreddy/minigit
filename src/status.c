@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <sys/stat.h>
+#include "status.h"
+#include "common.h"
 
-#define SUCCESS 0
-#define FAILURE -1
 #define REPOSITORY_PATH ".minigit"
 
 int repository_exists(void);
