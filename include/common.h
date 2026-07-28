@@ -3,5 +3,6 @@
 
 #define SUCCESS 0
 #define FAILURE -1
+#define SHA1_HEX_SIZE 41
 
 #endif
