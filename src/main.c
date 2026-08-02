@@ -9,6 +9,7 @@
 #include "add.h"
 #include "write_tree.h"
 #include "tree.h"
+#include "commit.h"
 
 void print_usage(void);
 
@@ -96,6 +97,27 @@ int main(int argc, char *argv[])
 
         return cmd_write_tree();
     }
+    /*commit*/
+    else if(strcmp(argv[1], "commit") == 0)
+    {
+        if(argc != 4)
+        {
+            fprintf(stderr,
+                    "Usage: minigit commit -m \"message\"\n\n");
+            print_usage();
+            return EXIT_FAILURE;
+        }
+
+        if(strcmp(argv[2], "-m") != 0)
+        {
+            fprintf(stderr,
+                    "Usage: minigit commit -m \"message\"\n\n");
+            print_usage();
+            return EXIT_FAILURE;
+        }
+
+        return cmd_commit(argv[3]);
+    }
 
     fprintf(stderr,
             "Unknown command: %s\n\n",
@@ -115,5 +137,6 @@ void print_usage(void)
                 "\tstatus\n"
                 "\thash-object <filename>\n"
                 "\tadd <filename> ...\n"
-                "\t write-tree\n");
+                "\t write-tree\n"
+                "\t commit -m \"message\"\n");
 }

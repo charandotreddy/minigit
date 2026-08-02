@@ -1,7 +1,7 @@
 .PHONY: clean
 
-minigit: main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o
-	gcc main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o -o minigit -lcrypto -lz
+minigit: main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o commit.o
+	gcc main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o commit.o -o minigit -lcrypto -lz
 
 main.o: src/main.c include/init.h include/status.h include/common.h include/hash_object.h include/add.h include/tree.h
 	gcc -Iinclude -c src/main.c -o main.o
@@ -33,5 +33,8 @@ index.o: src/index.c include/index.h include/common.h
 tree.o: src/tree.c include/tree.h include/sha1.h include/object_store.h include/common.h
 	gcc -Iinclude -c src/tree.c -o tree.o
 
+commit.o: src/commit.c include/commit.h include/tree.h include/object_store.h include/sha1.h include/common.h
+	gcc -Iinclude -c src/commit.c -o commit.o
+
 clean:
-	rm -f main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o minigit
+	rm -f main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o commit.o minigit
