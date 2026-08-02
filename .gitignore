@@ -1,19 +1,14 @@
 # Build artifacts
-build/
 *.o
-*.out
-a.out
 minigit
 
-# Debug files
-core
-
-# Editor files
-*.swp
-*.swo
-
-# Desktop metadata
-.directory
-
-# Generated MiniGit repository
+# MiniGit runtime data
 .minigit/
+
+# Editor settings
+.vscode/
+
+# Accidental Node.js files
+node_modules/
+package.json
+package-lock.json
