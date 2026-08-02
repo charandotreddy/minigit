@@ -1,9 +1,9 @@
 .PHONY: clean
 
-minigit: main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o
-	gcc main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o -o minigit -lcrypto -lz
+minigit: main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o
+	gcc main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o -o minigit -lcrypto -lz
 
-main.o: src/main.c include/init.h include/status.h include/common.h include/hash_object.h include/add.h
+main.o: src/main.c include/init.h include/status.h include/common.h include/hash_object.h include/add.h include/tree.h
 	gcc -Iinclude -c src/main.c -o main.o
 
 init.o: src/init.c include/init.h include/common.h
@@ -30,5 +30,8 @@ add.o: src/add.c include/add.h include/hash_object.h include/index.h include/com
 index.o: src/index.c include/index.h include/common.h
 	gcc -Iinclude -c src/index.c -o index.o
 
+tree.o: src/tree.c include/tree.h include/sha1.h include/object_store.h include/common.h
+	gcc -Iinclude -c src/tree.c -o tree.o
+
 clean:
-	rm -f main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o minigit
+	rm -f main.o init.o status.o sha1.o object.o hash_object.o object_store.o add.o index.o tree.o minigit

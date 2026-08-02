@@ -7,7 +7,8 @@
 #include "common.h"
 #include "hash_object.h"
 #include "add.h"
-
+#include "write_tree.h"
+#include "tree.h"
 
 void print_usage(void);
 
@@ -83,6 +84,19 @@ int main(int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
+    else if(strcmp(argv[1], "write-tree") == 0)
+    {
+        if(argc != 2)
+        {
+            fprintf(stderr,
+                    "Usage: minigit write-tree\n");
+                    print_usage();
+            return EXIT_FAILURE;
+        }
+
+        return cmd_write_tree();
+    }
+
     fprintf(stderr,
             "Unknown command: %s\n\n",
             argv[1]);
@@ -100,5 +114,6 @@ void print_usage(void)
                 "\tinit\n"
                 "\tstatus\n"
                 "\thash-object <filename>\n"
-                "\tadd <filename> ...");
+                "\tadd <filename> ...\n"
+                "\t write-tree\n");
 }
